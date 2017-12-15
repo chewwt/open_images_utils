@@ -1,3 +1,7 @@
+"""
+Try to remove flickr's image not found images
+"""
+
 import cv2
 import argparse
 import shutil
@@ -10,7 +14,7 @@ def copy_imgs(imgs, img_folder, store_folder):
     for img in imgs:
         shutil.copy2(os.path.join(img_folder, img), store_folder)
 
-def get_imgs(image, folder, store, threshold, offset):
+def get_imgs(image, folder, store, remove, threshold, offset):
     img = cv2.resize(cv2.imread(image), (600, 600))
     values = []
 
@@ -33,6 +37,8 @@ def get_imgs(image, folder, store, threshold, offset):
             found.append(f)
             if store is not None:
                 shutil.copy2(f, store)
+            if remove:
+                os.remove(f)
 
         if i % 100 == 0:
             print("done: ", i+1, "/", size, " ", (i+1) * 100.0 / size, "%    found: ", len(found), '/', i+1-offset, " ", len(found) * 100.0 / (i+1-offset), "%")
@@ -43,8 +49,8 @@ def histogram(values):
     plt.hist(values, bins='auto')
     plt.show()
 
-def main(image, folder, store, threshold, offset):
-    found, values = get_imgs(image, folder, store, threshold, offset)
+def main(image, folder, store, remove, threshold, offset):
+    found, values = get_imgs(image, folder, store, remove, threshold, offset)
     histogram(values)
     # copy_imgs(found, folder, store)
 
@@ -54,6 +60,8 @@ if __name__ == '__main__':
     p.add_argument('folder', help='image folder')
     p.add_argument('--store', '-s', default=None,
                    help='image folder to store dubious images')
+    p.add_argument('--remove', '-r', action='store_true',
+                   help='whether to remove "bad" images from original folder')
     p.add_argument('--threshold', '-t', type=int, default=50,
                    help='max difference')
     p.add_argument('--offset', '-o', type=int, default=0,
@@ -61,4 +69,4 @@ if __name__ == '__main__':
 
     args = p.parse_args()
 
-    main(args.image, args.folder, args.store, args.threshold, args.offset)
+    main(args.image, args.folder, args.store, args.remove, args.threshold, args.offset)
