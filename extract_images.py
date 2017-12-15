@@ -1,3 +1,7 @@
+"""
+Download images
+"""
+
 import sys
 import time
 import argparse

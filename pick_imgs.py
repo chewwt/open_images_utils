@@ -1,3 +1,7 @@
+"""
+Pick a small number of images for sanity check
+"""
+
 import csv
 import argparse
 import shutil

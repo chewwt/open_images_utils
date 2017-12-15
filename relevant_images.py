@@ -1,3 +1,6 @@
+"""
+Produce a csv file containing relevant images' url
+"""
 import csv
 import argparse
 

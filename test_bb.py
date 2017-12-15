@@ -1,3 +1,7 @@
+"""
+Look at an image and its bounding boxes
+"""
+
 import csv
 import argparse
 import cv2

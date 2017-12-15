@@ -1,3 +1,7 @@
+"""
+Delete unwanted images
+"""
+
 import time
 import csv
 import argparse

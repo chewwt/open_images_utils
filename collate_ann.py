@@ -1,3 +1,7 @@
+"""
+Collate annotations to a format readable by darkflow
+"""
+
 import csv
 import argparse
 import os
