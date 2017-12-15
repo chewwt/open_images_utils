@@ -100,20 +100,19 @@ def get_img_list(in_csv):
     with open(in_csv,'r') as f:
         csvreader = csv.reader(f,delimiter=',')
         for row in csvreader:
-            img_list.append(row[0])
+            img_list.append(row[0].split('.')[-2])
 
     return img_list
 
-def main(wanted_csv, img_csv, folder, delete, store, corrupt):
+def main(ann_csv, folder, delete, store, corrupt):
     imgs = get_imgs(folder)
-    wanted = get_img_list(wanted_csv)
+    wanted = get_img_list(ann_csv)
     compare_wanted(wanted, imgs, folder, delete, store, corrupt)
     # print(imgs[0], wanted[0])
 
 if __name__ == '__main__':
     p = argparse.ArgumentParser()
-    p.add_argument('wanted_csv', help='csv file with wanted images')
-    p.add_argument('img_csv', help='OpenImages csv image url file')
+    p.add_argument('collated_ann_csv', help='collated annotations csv file from collate_ann.py')
     p.add_argument('folder', help='folder with images')
     p.add_argument('--delete', '-d', action='store_true',
                     help='whether to delete unwanted corrupted imgs')
@@ -123,4 +122,4 @@ if __name__ == '__main__':
                     help='whether to check for corrupted images')
     args = p.parse_args()
 
-    main(args.wanted_csv, args.img_csv, args.folder, args.delete, args.store, args.corrupt)
+    main(args.collated_ann_csv, args.folder, args.delete, args.store, args.corrupt)
