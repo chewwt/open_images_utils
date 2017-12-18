@@ -1,5 +1,6 @@
 """
 Download images
+adapted from https://github.com/beniz/openimages_downloader/blob/master/openimages_downloader.py
 """
 
 import sys
@@ -21,7 +22,6 @@ import queue
 
 FAILED = []
 
-# adapted from https://github.com/beniz/openimages_downloader/blob/master/openimages_downloader.py
 def download_image(url, timeout, retry, sleep, verbose=False):
     count = 0
     while True:
